@@ -1,0 +1,19 @@
+
+.navbar {
+    background-color: #f0f0f0;
+    // position: fixed;
+   max-width: 100vw;
+    // z-index: 3;
+    nav {
+        ul {
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 20px 0;
+            display: flex;
+            li {
+                list-style: none;
+                margin-right: 10px;
+            }
+        }
+    }
+}

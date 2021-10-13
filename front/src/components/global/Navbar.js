@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { Link, NavLink } from 'react-router-dom';
+import '../../assets/styles/navbar.scss';
 
 export const Navbar = () => {
     return (
+        <div className="navbar">
             <nav>
                 <ul>
                     <li>
@@ -18,5 +20,7 @@ export const Navbar = () => {
                     </li>
                 </ul>
             </nav>
+
+        </div>
     )
 }
