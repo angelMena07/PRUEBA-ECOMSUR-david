@@ -3,8 +3,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    NavLink,
-    Link
 } from 'react-router-dom';
 import { Navbar } from '../components/global/Navbar';
 import { CartPage } from '../pages/CartPage';

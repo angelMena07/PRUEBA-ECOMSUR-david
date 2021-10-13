@@ -26,10 +26,11 @@ export const Product = () => {
 
     return (
         <section id="product">
-            <div className="Product">
+            <div className="product">
+                <div className="title"> Información detallada del producto </div>
                 <div className="row">
                     <div className="col img">
-                        <img src={`http://localhost:5000${product.image}`}/>
+                        <img src={`http://localhost:5000${product.image}`} />
                     </div>
                     <div className="col info">
                         <h2>
@@ -39,11 +40,15 @@ export const Product = () => {
                             {product.description}
                         </p>
                         <p>
-                            {product.price}
+                           <strong>Marca:</strong>  {product.brand}
                         </p>
                         <p>
-                            {product.price}
+                           <strong>Categoría:</strong>  {product.category}
                         </p>
+                        <p>
+                            <strong>Precio:</strong>  {`$${product.price}`}
+                        </p>
+                        <div className="button">Añadir al carrito</div>
                     </div>
                 </div>
             </div>
