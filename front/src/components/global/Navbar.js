@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Link, NavLink } from 'react-router-dom';
 import '../../assets/styles/navbar.scss';
+import { useSelector } from 'react-redux';
 
 export const Navbar = () => {
+
+    const cart = useSelector((state) => state.cart.cartItems)
+
     return (
         <div className="navbar">
             <nav>
@@ -15,7 +19,7 @@ export const Navbar = () => {
                     </li>
                     <li>
                         <Link to="/cart">
-                            Carrito
+                            Carrito ({cart.length})
                             </Link>
                     </li>
                 </ul>

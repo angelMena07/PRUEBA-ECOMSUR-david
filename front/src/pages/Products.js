@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { AppRouter } from '../router/AppRouter'
 import axios from 'axios';
 import { CardProduct } from '../components/CardProduct';
 
@@ -26,7 +25,6 @@ export const Products = () => {
 
     return (
         <div className="grid">
-            Productos
             <div className="row">
                 {
                     products.map(prod => {

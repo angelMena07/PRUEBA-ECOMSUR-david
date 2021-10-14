@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 
+import { useDispatch } from 'react-redux';
+import { increment } from '../redux/cartSlice';
+import { Toast } from '../swal/toast';
+
 import '../assets/styles/product.scss'
 export const Product = () => {
+
+    const dispatch = useDispatch()
 
     const [product, setProduct] = useState({})
     const { id } = useParams();
@@ -21,6 +27,19 @@ export const Product = () => {
         } catch (error) {
             console.log(error);
             throw error;
+        }
+    }
+
+    const addCart = () => {
+        if (product.countInStock > 0) {
+            dispatch(increment(product));
+            Toast.fire({
+                icon: 'success', title: 'Añadido correctamente',
+            })
+        } else {
+            Toast.fire({
+                icon: 'error', title: 'No hay productos disponibles',
+            })
         }
     }
 
@@ -48,7 +67,9 @@ export const Product = () => {
                         <p>
                             <strong>Precio:</strong>  {`$${product.price}`}
                         </p>
-                        <div className="button">Añadir al carrito</div>
+                        <div className={product.countInStock > 0 ? 'button': 'button disabled'} 
+                             onClick={() => addCart() }
+                        >Añadir al carrito</div>
                     </div>
                 </div>
             </div>

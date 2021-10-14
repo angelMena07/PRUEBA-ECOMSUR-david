@@ -3,7 +3,7 @@ import React from 'react'
 import '../assets/styles/cartPage.scss';
 import exit from '../assets/img/delete.svg';
 
-export const CardCart = ({product}) => {
+export const CardCart = ({product, deleteProduct }) => {
 
     return (
         <div className="cart-card">
@@ -17,7 +17,7 @@ export const CardCart = ({product}) => {
             <div className="price">
                 {`$${product.price}`}
             </div>
-                <img className="delete" src={exit}/>
+                <img onClick={() => deleteProduct(product)} className="delete" src={exit}/>
         </div>
     )
 }

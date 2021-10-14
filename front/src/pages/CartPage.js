@@ -1,33 +1,31 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { CardCart } from '../components/CardCart';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement } from '../redux/cartSlice';
+import { Toast } from '../swal/toast';
+
+
 export const CartPage = () => {
 
-    const [products, setproducts] = useState([])
+    const dispatch = useDispatch()
+
+    const cart = useSelector((state) => state.cart.cartItems)
+
+
     const [total, setTotal] = useState(0)
 
-    useEffect(async() => {
-       await getProducts();
+    useEffect(async () => {
+        console.log("carrito en redux", cart);
     }, [])
 
-    const getProducts = async () => {
-        try {
-            let { data } = await axios.get(`http://localhost:5000/api/products`)
-            let totalProd = 0
-            console.log(data);
-            setproducts(data)
-            data.map(prod =>  {
-                totalProd = totalProd + prod.price
-             })
-             setTotal(totalProd)
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
+    const deletCart = (p) => {
+        dispatch(decrement(p))
+        Toast.fire({
+            icon: 'success', title: 'Producto eliminado',
+            customClass: 'swal-custom'
+        })
     }
-
-  
 
     return (
         <div id="cart">
@@ -38,13 +36,13 @@ export const CartPage = () => {
             </div>
             <div className="col">
                 {
-                    products.map(prod => {
-                        return <CardCart key={prod._id} product={prod} />
+                    cart.map(prod => {
+                        return <CardCart deleteProduct={(p) => deletCart(p)} key={prod._id} product={prod} />
                     })
                 }
             </div>
             <div className="total">
-               <strong>Subtotal:</strong>  {`$${total}`}
+                <strong>Subtotal:</strong>  {`$${total.toFixed(2)}`}
             </div>
         </div>
     )
