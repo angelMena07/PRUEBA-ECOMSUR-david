@@ -24,7 +24,7 @@ export const CardCart = ({product, deleteProduct }) => {
             <div>
                 cantidad: {product.qty}
             </div>
-                <img onClick={() => deleteProduct(product.product)} className="delete" src={exit}/>
+                <img onClick={() => deleteProduct(product)} className="delete" src={exit}/>
         </div>
     )
 }
