@@ -3,10 +3,12 @@ import { createSlice, current } from '@reduxjs/toolkit'
 const CART_STORAGE = 'CART';
 const getInitialItems = JSON.parse(localStorage.getItem(CART_STORAGE));
 
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         cartItems: getInitialItems || [],
+        totalAmount: 0,
     },
     reducers: {
         increment: (state, action) => {
@@ -15,10 +17,18 @@ export const cartSlice = createSlice({
 
             let found = cart.findIndex(item => item.product._id === action.payload.product._id)
             if (found !== -1) {
-              let finalCart = cart.map(item => {
+                let finalCart = cart.map(item => {
                     let deepClone = JSON.parse(JSON.stringify(item));
                     if (item.product._id === action.payload.product._id) {
-                        deepClone.qty += action.payload.qty;
+
+                        console.log("sdfsdfsdfsdf", item.product.countInStock, item.qty);
+
+                        if (item.product.countInStock > item.qty) {
+                            deepClone.qty += action.payload.qty;
+                        } else {
+                            deepClone.qty = item.product.countInStock;
+
+                        }
                     }
                     return deepClone;
                 });
@@ -39,6 +49,6 @@ export const cartSlice = createSlice({
     },
 })
 
-export const { increment, decrement } = cartSlice.actions
+export const { increment, decrement, total } = cartSlice.actions
 
 export default cartSlice.reducer

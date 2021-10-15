@@ -17,14 +17,30 @@ export const CartPage = () => {
 
     useEffect(async () => {
         console.log("carrito en redux", cart);
+        getTotal();
     }, [])
 
     const deletCart = (p) => {
-        dispatch(decrement(p))
+        dispatch(decrement(p));
+        setTimeout(() => {
+            getTotal();
+            
+        }, 500);
+
         Toast.fire({
             icon: 'success', title: 'Producto eliminado',
             customClass: 'swal-custom'
         })
+    }
+
+    const getTotal = () => {
+        console.log("carrito en redux", cart);
+        let totalAmount = 0
+        cart.map(item => {
+            totalAmount = totalAmount + (item.product.price * item.qty) 
+        })
+        console.log(totalAmount);
+        setTotal(totalAmount);
     }
 
     return (
@@ -37,7 +53,6 @@ export const CartPage = () => {
             <div className="col">
                 {
                     cart.map(prod => {
-                        console.log(prod);
                         return <CardCart deleteProduct={(p) => deletCart(p)} key={prod.product._id} product={prod} />
                     })
                 }

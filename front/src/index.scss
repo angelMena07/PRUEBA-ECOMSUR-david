@@ -109,6 +109,9 @@ body a {
     .card {
       flex: 0 0 22%;
       margin-right: 1%;
+      a {
+        min-height: 35vh;
+      }
     }
   }
 }

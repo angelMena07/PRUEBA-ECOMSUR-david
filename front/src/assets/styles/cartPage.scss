@@ -9,6 +9,7 @@
     border-radius: 15px;
     padding: 10px;
     .img {
+        display: none;
         img {
             width: 80px;
             height: 80px;
@@ -18,11 +19,24 @@
     }
     .info {
         padding: 0 10px;
+        font-size: 10px;
+        max-width: 20%;
     }
     .price {
         padding: 0 10px;
     }
     .delete {
         cursor: pointer;
+    }
+}
+@media screen and (min-width:550px) {
+    .cart-card {
+        .img{
+            display: block;
+        }
+        .info {
+            max-width: unset;
+            font-size: unset;
+        }
     }
 }

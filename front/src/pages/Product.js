@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { increment } from '../redux/cartSlice';
 import { Toast } from '../swal/toast';
 import { RatingView } from 'react-simple-star-rating'
@@ -10,14 +10,17 @@ import { RatingView } from 'react-simple-star-rating'
 import '../assets/styles/product.scss'
 export const Product = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart.cartItems)
 
     const [product, setProduct] = useState({})
+
     const { id } = useParams();
 
-    useEffect(() => {
-        console.log(id);
-        getProduct()
+    useEffect(async () => {
+        await getProduct();
+
+
     }, [])
 
     const getProduct = async () => {
@@ -33,15 +36,33 @@ export const Product = () => {
 
     const addCart = () => {
         if (product.countInStock > 0) {
-            dispatch(increment({product, qty:1}));
-            // dispatch(increment(product));
+            dispatch(increment({ product, qty: 1 }));
+
+
+            if (validateStock()) {
+                return
+            }
+
             Toast.fire({
                 icon: 'success', title: 'Añadido correctamente',
             })
+
         } else {
             Toast.fire({
                 icon: 'error', title: 'No hay productos disponibles',
             })
+        }
+    }
+
+    const validateStock = () => {
+        let index = cart.findIndex(item => item.product._id === product._id);
+        if (index !== -1 && cart[index].qty >= product.countInStock) {
+            Toast.fire({
+                icon: 'error', title: 'No hay productos disponibles',
+            })
+            return true
+        } else {
+            return false
         }
     }
 
@@ -57,23 +78,23 @@ export const Product = () => {
                         <h2>
                             {product.name}
                         </h2>
-                        <div style={{display:'flex'}}>
-                        <RatingView ratingValue={product.rating}  /> <span style={{marginLeft:'20px'}}> Reseñas: ({product.numReviews}) </span>
+                        <div style={{ display: 'flex' }}>
+                            <RatingView ratingValue={product.rating} /> <span style={{ marginLeft: '20px' }}> Reseñas: ({product.numReviews}) </span>
                         </div>
                         <p>
                             {product.description}
                         </p>
                         <p>
-                           <strong>Marca:</strong>  {product.brand}
+                            <strong>Marca:</strong>  {product.brand}
                         </p>
                         <p>
-                           <strong>Categoría:</strong>  {product.category}
+                            <strong>Categoría:</strong>  {product.category}
                         </p>
                         <p>
                             <strong>Precio:</strong>  {`$${product.price}`}
                         </p>
-                        <div className={product.countInStock > 0 ? 'button': 'button disabled'} 
-                             onClick={() => addCart() }
+                        <div className={product.countInStock > 0 ? 'button' : 'button disabled'}
+                            onClick={() => addCart()}
                         >Añadir al carrito</div>
                     </div>
                 </div>

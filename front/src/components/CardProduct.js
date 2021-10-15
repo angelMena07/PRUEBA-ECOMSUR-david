@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 
 
-import cart from '../assets/img/icon-cart.png'
+import cartImg from '../assets/img/icon-cart.png'
 import { increment } from '../redux/cartSlice';
 
 import { Toast } from '../swal/toast';
@@ -15,6 +15,7 @@ import { RatingView } from 'react-simple-star-rating'
 export const CardProduct = ({ product }) => {
 
     const dispatch = useDispatch()
+    const cart = useSelector((state) => state.cart.cartItems)
 
 
     const [img, setImg] = useState('');
@@ -32,7 +33,11 @@ export const CardProduct = ({ product }) => {
     const addCart = () => {
         if (product.countInStock > 0) {
             dispatch(increment({ product, qty: 1 }));
-            // dispatch(increment(product));
+
+            if (validateStock()) {
+                return
+            }
+
             Toast.fire({
                 icon: 'success', title: 'Añadido correctamente',
             })
@@ -43,12 +48,24 @@ export const CardProduct = ({ product }) => {
         }
     }
 
+    const validateStock = () => {
+        let index = cart.findIndex(item => item.product._id === product._id);
+        if (index !== -1 && cart[index].qty >= product.countInStock) {
+            Toast.fire({
+                icon: 'error', title: 'No hay productos disponibles',
+            })
+            return true
+        } else {
+            return false
+        }
+    }
+
     return (
         <div className="card">
-            <img onClick={() => addCart()} src={cart} id="cart" />
+            <img onClick={() => addCart()} src={cartImg} id="cart" />
 
             <Link to={`product/${product._id}`}>
-                <div style={{position:'relative',width:'100%'}}>
+                <div style={{ position: 'relative', width: '100%' }}>
                     <div id="stars">
                         <RatingView ratingValue={product.rating} />
                     </div>
@@ -59,8 +76,8 @@ export const CardProduct = ({ product }) => {
                 <div className="info">
                     <div className="name">{product.name}</div>
                     <div className="price">{`$${product.price}`}</div>
-                    
-                     
+
+
                 </div>
             </Link>
         </div>
