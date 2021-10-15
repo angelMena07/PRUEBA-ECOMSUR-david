@@ -37,7 +37,8 @@ export const CartPage = () => {
             <div className="col">
                 {
                     cart.map(prod => {
-                        return <CardCart deleteProduct={(p) => deletCart(p)} key={prod._id} product={prod} />
+                        console.log(prod);
+                        return <CardCart deleteProduct={(p) => deletCart(p)} key={prod.product._id} product={prod} />
                     })
                 }
             </div>

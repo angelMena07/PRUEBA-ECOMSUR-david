@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { increment } from '../redux/cartSlice';
 import { Toast } from '../swal/toast';
+import { RatingView } from 'react-simple-star-rating'
 
 import '../assets/styles/product.scss'
 export const Product = () => {
@@ -32,7 +33,8 @@ export const Product = () => {
 
     const addCart = () => {
         if (product.countInStock > 0) {
-            dispatch(increment(product));
+            dispatch(increment({product, qty:1}));
+            // dispatch(increment(product));
             Toast.fire({
                 icon: 'success', title: 'Añadido correctamente',
             })
@@ -55,6 +57,9 @@ export const Product = () => {
                         <h2>
                             {product.name}
                         </h2>
+                        <div style={{display:'flex'}}>
+                        <RatingView ratingValue={product.rating}  /> <span style={{marginLeft:'20px'}}> Reseñas: ({product.numReviews}) </span>
+                        </div>
                         <p>
                             {product.description}
                         </p>

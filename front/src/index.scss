@@ -34,7 +34,23 @@ body a {
       cursor: pointer;
       z-index: 10;
     }
+    #stars {
+      position: absolute;
+      bottom: 5px;
+      left: 10px;
+      z-index: 10;
+    }
+    #review {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: white;
+      padding: 5px 10px;
+      z-index: 10;
+      border-radius: 10px 0 0 0 ;
+    }
     a {
+      min-height: 32vh;
       flex: 0 0 94%;
       display: flex;
       flex-wrap: wrap;
@@ -48,7 +64,7 @@ body a {
       box-shadow: 2px 2px 11px 0px rgba(0, 0, 0, 0.4);
       -webkit-box-shadow: 2px 2px 11px 0px rgba(0, 0, 0, 0.4);
       -moz-box-shadow: 2px 2px 11px 0px rgba(0, 0, 0, 0.4);
-    
+
       .img {
         border-radius: 15px 15px 0 0;
         width: 100%;
@@ -58,7 +74,14 @@ body a {
       .info {
         padding: 20px 0;
         width: 100%;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        .name {
+          flex: 0 0 65%;
+        }
+        .price {
+          flex: 0 0 15%;
+        }
       }
     }
   }
@@ -66,12 +89,18 @@ body a {
     justify-content: space-between;
     .card {
       flex: 0 0 45%;
+      a {
+        min-height: 25vh;
+      }
     }
   }
   @media screen and (min-width: 1100px) {
     justify-content: space-between;
     .card {
       flex: 0 0 30%;
+      a {
+        min-height: 32vh;
+      }
     }
   }
 
@@ -98,7 +127,6 @@ body a {
     }
   }
 }
-
 
 .swal-custom {
   background-color: gray;

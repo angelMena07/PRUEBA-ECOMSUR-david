@@ -17,7 +17,7 @@ export const Navbar = () => {
                             Productos
                             </NavLink>
                     </li>
-                    <li>
+                    <li className="button">
                         <Link to="/cart">
                             Carrito ({cart.length})
                             </Link>

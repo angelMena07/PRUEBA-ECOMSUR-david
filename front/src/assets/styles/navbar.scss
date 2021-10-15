@@ -14,6 +14,22 @@
             li {
                 list-style: none;
                 margin-right: 10px;
+                font-size: 1.5em;
+                font-weight: 500;
+
+                &.button {
+                    background-color: #817f7f;
+                    border-radius: 10px;
+                    padding: 5px 10px 8px;
+                    transition: all .2s ease-in-out;
+                    a {
+                    color: white;
+
+                    }
+                    &:hover {
+                        background-color:#505050 ;
+                    }
+                }
             }
         }
     }
